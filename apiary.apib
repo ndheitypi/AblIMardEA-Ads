@@ -1,0 +1,81 @@
+FORMAT: 1A
+
+# Ads
+The Ads API is a collection of services to create, update and delete advertising campaigns.
+
+The Ads API divides between *campaign, ad-group and ad*. A campaign is a container for one 
+or more ad-groups. An ad-group defines things like budget, targeting and duration. It contains one or more Ads. 
+An Ad is either an *image, text, video, survey or a coupon*.
+
+All ads are paid on per click base. User clicks are measured according to the measurement guidelines of the 
+Interactive Advertising Bureau (for more informations consider reading the 
+[Measurement Guidelines](http://www.iab.net/media/file/click-measurement-guidelines2009.pdf)).
+
+
+# Campaign
+A campaign is just a container with a title describing the purpose of creating this specific set of ads. 
+
+| Name      |      Type         |  Description  |  required |
+|----------|:-------------:|:------:|------|
+| title     |  String     | Short description of campaign.  | True  |
+
+
+## Campaigns Collection [/campaigns]
+Methods to show all campaigns or create a new campaign.
+
+### List all Campaigns [GET]
++ Response 200 (application/json)
+
+        [{
+          "id": 1, "title": "Advertise new product XYZ."
+        }, {
+          "id": 2, "title": "Advertise 50% discount of product XYZ."
+        }]
+
+### Create a Campaign [POST]
+
++ Request (application/json)
+
+        { "title": "Advertise new company XYZ." }
+
++ Response 201 (application/json)
+
+        { "id": 3, "title": "Advertise new company XYZ." }
+
+## Campaign [/campaigns/{id}]
+View or remove a single campaign.
++ Parameters
+    + id (required, number, `1`) ... Numeric `id` of the Campaign to perform action with. Has example value.
+
+### Retrieve a Campaign [GET]
+
++ Response 200 (application/json)
+
+    + Header
+
+            X-My-Header: The Value
+
+    + Body
+
+            {
+                "id": 1,
+                "title:" "Advertise 50% discount of product XYZ.",
+                "ad-groups": {[
+                    {
+                        "id": 1,
+                        "title": "Targeting by age and country."
+                    }, 
+                    {
+                        "id": 2,
+                        "title": "Targeting by answered questions."
+                    }, 
+                    {
+                        "id": 3,
+                        "title": "Targeting by products bought."
+                    } 
+                ]}
+            }
+
+
+### Remove a Campaign [DELETE]
++ Response 204
